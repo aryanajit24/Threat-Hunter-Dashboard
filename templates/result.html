@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threat Analysis - {{ result.ip }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .threat-level {
+            text-align: center;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .critical { background: #dc3545; color: white; }
+        .high { background: #fd7e14; color: white; }
+        .medium { background: #ffc107; color: #333; }
+        .low { background: #28a745; color: white; }
+        .unknown { background: #6c757d; color: white; }
+        
+        .section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            border-radius: 10px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .data-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .data-row:last-child {
+            border-bottom: none;
+        }
+        
+        .data-label {
+            font-weight: 600;
+            color: #555;
+            width: 250px;
+        }
+        
+        .data-value {
+            color: #333;
+            flex: 1;
+        }
+        
+        .error {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+            padding: 15px;
+        }
+        
+        .back-button {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .score-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .score-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Threat Analysis Results</h1>
+        
+        <div class="threat-level {{ result.threat_level|lower }}">
+            🚨 Threat Level: {{ result.threat_level|upper }}
+            <div style="font-size: 16px; margin-top: 10px; font-weight: normal;">
+                IP: {{ result.ip }} | Analyzed: {{ result.timestamp }}
+            </div>
+        </div>
+        
+        <!-- IP Geolocation Info -->
+        {% if result.ip_info %}
+        <div class="section">
+            <h2>🌍 IP Geolocation Information</h2>
+            <div class="data-row">
+                <div class="data-label">Country:</div>
+                <div class="data-value">{{ result.ip_info.country_name }} ({{ result.ip_info.country }})</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">City:</div>
+                <div class="data-value">{{ result.ip_info.city }}</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Region:</div>
+                <div class="data-value">{{ result.ip_info.region }}</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">ISP / Organization:</div>
+                <div class="data-value">{{ result.ip_info.org }}</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">ASN:</div>
+                <div class="data-value">{{ result.ip_info.asn }}</div>
+            </div>
+            <div class="data-row">
+                <div class="data-label">Timezone:</div>
+                <div class="data-value">{{ result.ip_info.timezone }}</div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- AbuseIPDB Results -->
+        {% if result.abuseipdb %}
+        <div class="section">
+            <h2>🛡️ AbuseIPDB Results</h2>
+            {% if result.abuseipdb.error %}
+                <div class="error">
+                    ⚠️ {{ result.abuseipdb.error }}
+                    <p style="margin-top: 10px; font-size: 0.9em;">
+                        Get a free API key at <a href="https://www.abuseipdb.com" target="_blank" style="color: #667eea;">abuseipdb.com</a>
+                    </p>
+                </div>
+            {% else %}
+                <div class="data-row">
+                    <div class="data-label">Abuse Confidence Score:</div>
+                    <div class="data-value">
+                        <strong style="font-size: 1.2em; color: {% if result.abuseipdb.abuse_score > 75 %}#dc3545{% elif result.abuseipdb.abuse_score > 50 %}#fd7e14{% elif result.abuseipdb.abuse_score > 25 %}#ffc107{% else %}#28a745{% endif %};">
+                            {{ result.abuseipdb.abuse_score }}%
+                        </strong>
+                        <div class="score-bar">
+                            <div class="score-fill" style="width: {{ result.abuseipdb.abuse_score }}%; background: {% if result.abuseipdb.abuse_score > 75 %}#dc3545{% elif result.abuseipdb.abuse_score > 50 %}#fd7e14{% elif result.abuseipdb.abuse_score > 25 %}#ffc107{% else %}#28a745{% endif %};">
+                                {{ result.abuseipdb.abuse_score }}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Country:</div>
+                    <div class="data-value">{{ result.abuseipdb.country }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">ISP:</div>
+                    <div class="data-value">{{ result.abuseipdb.isp }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Total Reports:</div>
+                    <div class="data-value">{{ result.abuseipdb.total_reports }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Last Reported:</div>
+                    <div class="data-value">{{ result.abuseipdb.last_reported }}</div>
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- VirusTotal Results -->
+        {% if result.virustotal %}
+        <div class="section">
+            <h2>🦠 VirusTotal Results</h2>
+            {% if result.virustotal.error %}
+                <div class="error">
+                    ⚠️ {{ result.virustotal.error }}
+                    <p style="margin-top: 10px; font-size: 0.9em;">
+                        Get a free API key at <a href="https://www.virustotal.com" target="_blank" style="color: #667eea;">virustotal.com</a>
+                    </p>
+                </div>
+            {% else %}
+                <div class="data-row">
+                    <div class="data-label">Malicious Detections:</div>
+                    <div class="data-value">
+                        <strong style="font-size: 1.2em; color: {% if result.virustotal.malicious > 0 %}#dc3545{% else %}#28a745{% endif %};">
+                            {{ result.virustotal.malicious }}
+                        </strong>
+                    </div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Suspicious:</div>
+                    <div class="data-value">{{ result.virustotal.suspicious }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Harmless:</div>
+                    <div class="data-value">{{ result.virustotal.harmless }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="data-label">Reputation Score:</div>
+                    <div class="data-value">{{ result.virustotal.reputation }}</div>
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="back-button">
+            <a href="/"><button>🔍 Check Another IP</button></a>
+        </div>
+    </div>
+</body>
+</html>

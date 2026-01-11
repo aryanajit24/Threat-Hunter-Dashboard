@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threat Hunter Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .search-box {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        input[type="text"] {
+            padding: 15px 20px;
+            width: 400px;
+            max-width: 90%;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            padding: 15px 40px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .feature {
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            color: #666;
+        }
+        
+        .example {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Threat Hunter Dashboard</h1>
+        <p class="subtitle">Multi-Source Threat Intelligence Platform</p>
+        
+        <div class="search-box">
+            <form method="POST" action="/check_ip">
+                <input 
+                    type="text" 
+                    name="ip" 
+                    placeholder="Enter IP Address (e.g., 8.8.8.8)" 
+                    required
+                >
+                <button type="submit">🔎 Analyze Threat</button>
+            </form>
+            <p class="example">Try: 8.8.8.8 (Google DNS) or 1.1.1.1 (Cloudflare DNS)</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>🛡️ AbuseIPDB</h3>
+                <p>IP reputation and abuse confidence scoring from community reports</p>
+            </div>
+            <div class="feature">
+                <h3>🦠 VirusTotal</h3>
+                <p>Malware detection across 70+ security vendors</p>
+            </div>
+            <div class="feature">
+                <h3>🌐 IP Geolocation</h3>
+                <p>Geographic location, ISP, and network information</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Powered by:</strong> AbuseIPDB, VirusTotal, and IPAPI</p>
+            <p style="margin-top: 10px; font-size: 12px;">
+                Made with ❤️ for SOC Analysts | 
+                <a href="/test" style="color: #667eea; text-decoration: none;">Test Page</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
