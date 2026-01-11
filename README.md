@@ -187,7 +187,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 **Aryan Panicker**
 - 🎓 Constructor University Bremen
-- 💼 [LinkedIn](https://linkedin.com/in/aryanpanicker)
+- 💼 [LinkedIn](https://www.linkedin.com/in/aryan-panicker-0856a0203/)
 - 🐙 [GitHub](https://github.com/aryanajit24)
 - 📧 apanicker@constructor.university
 
@@ -214,4 +214,4 @@ This tool is for educational and legitimate security research purposes only. Alw
 
 ⭐ **If you find this project useful, please consider giving it a star!**
 
-📧 **Questions or feedback? Open an issue or reach out!**
+📧 **Questions or feedback? Open an issue or reach out!
