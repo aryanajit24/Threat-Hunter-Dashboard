@@ -186,17 +186,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 👤 Author
 
 **Aryan Panicker**
-- 🎓 Constructor University Bremen
 - 💼 [LinkedIn](https://www.linkedin.com/in/aryan-panicker-0856a0203/)
 - 🐙 [GitHub](https://github.com/aryanajit24)
-- 📧 apanicker@constructor.university
+- 📧 aryanajit24@gmail.com
 
 ## 🙏 Acknowledgments
 
 - AbuseIPDB for IP abuse data
 - VirusTotal for malware detection
 - IPAPI for geolocation services
-- Constructor University for providing learning resources
 
 ## 📚 Learning Resources
 
@@ -214,4 +212,4 @@ This tool is for educational and legitimate security research purposes only. Alw
 
 ⭐ **If you find this project useful, please consider giving it a star!**
 
-📧 **Questions or feedback? Open an issue or reach out!
+📧 **Questions or feedback? Open an issue or reach out!**
